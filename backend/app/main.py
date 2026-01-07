@@ -1,10 +1,20 @@
 from fastapi import FastAPI
-from .routers import chatbot  
+from app.routers.chatbot import router
+from dotenv import load_dotenv
+load_dotenv()
 
-app = FastAPI(title="syncHer API")  
+app = FastAPI(name="SyncHer")
 
-app.include_router(chatbot.router)
+app.include_router(router)
 
-@app.get("/")
-async def root():
-    return {"status": "Backend is up, bravo!!"}
+# @app.post("")
+# async def register():
+#     pass
+
+# @app.post("")
+# async def login():
+#     pass
+
+# @app.post("")
+# async def period_tracking():
+#     pass
