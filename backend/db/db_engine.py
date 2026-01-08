@@ -1,4 +1,4 @@
-from db_models import SQLModel
+from db.db_models import SQLModel
 import os 
 from sqlmodel import create_engine
 from dotenv import load_dotenv

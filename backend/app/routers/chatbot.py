@@ -16,8 +16,6 @@ LOCATION = os.getenv("PROJECT_LOCATION")
 AGENT_ID = os.getenv("GOOGLE_AGENT_ID")
 LANGUAGE_CODE = "en"
 
-print(JSON_KEY_PATH)
-
 credentials = service_account.Credentials.from_service_account_file(JSON_KEY_PATH)
 
 client_options = {"api_endpoint": f"{LOCATION}-dialogflow.googleapis.com"}
