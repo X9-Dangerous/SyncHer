@@ -4,7 +4,7 @@ from sqlmodel import SQLModel, Field
 from typing import Optional
 import uuid
 
-class User(SQLModel, table=True):
+class Users(SQLModel, table=True):
     id: str | None = Field(
         default=None,
         sa_column=Column(
@@ -29,5 +29,5 @@ class PeriodDays(SQLModel, table=True):
             nullable=False,
         ),
     )
-    user: uuid.UUID = Field(foreign_key="user.id")
+    user: uuid.UUID = Field(foreign_key="users.id")
     period: Optional[str] = Field(sa_column=Column(DATERANGE))

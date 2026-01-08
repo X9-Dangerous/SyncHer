@@ -1,41 +1,18 @@
 "use client"; 
 
-import { useState, useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
-
-
+import { useState } from "react";
+import Link from "next/link";
 
 type Message = {
   sender: "user" | "bot";
   text : string;
 }
 
-export default function Chat() {
-  const router = useRouter();
+export default function GuestChat() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
   const [sessionId] = useState(() => typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(7));
-
-  const [authChecked, setAuthChecked] = useState(false);
-
-useEffect(() => {
-  const token = localStorage.getItem("token");
-  if (!token) {
-    router.replace("/login");
-  } else {
-    setAuthChecked(true);
-  }
-}, [router]);
-
-  if (!authChecked) {
-    return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
-        <div className="w-8 h-8 border-4 border-red-500/30 border-t-red-500 rounded-full animate-spin"></div>
-      </div>
-    );
-  }
-
 
   const sendMessage = async () => {
     if (!input.trim()) return;
@@ -47,29 +24,17 @@ useEffect(() => {
     setMessages((prev) => [...prev, userMessage]);
     setInput("");
     setLoading(true);
-    
-
 
     try {
-      const token = localStorage.getItem("token");
-      const res = await fetch("/api/chatbot/ask", {
+      const res = await fetch("/api/chatbot/guest/ask", {
         method: "POST",
-        headers: { 
-          "Content-Type": "application/json",
-          "Authorization": `Bearer ${token}`
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 
           question: userMessage.text,
           session_id: sessionId
          }),
       });
       
-      if (res.status === 401) {
-        localStorage.removeItem("token");
-        router.replace("/login");
-        return;
-      }
-
       const data = await res.json();
 
       const botMessage: Message = { 
@@ -86,11 +51,6 @@ useEffect(() => {
     }
   };
 
-  const handleLogout = () => {
-    localStorage.removeItem("token");  
-    router.push("/");              
-  };
-
   return (
     <main className="min-h-screen bg-gradient-to-br from-gray-900 via-red-950 to-black flex flex-col">
       {/* Header */}
@@ -105,19 +65,24 @@ useEffect(() => {
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-red-100">SyncHer</h1>
-                <p className="text-red-200/70 text-sm">Your menstrual wellness companion</p>
+                <p className="text-red-200/70 text-sm">Guest Mode • Your menstrual wellness companion</p>
               </div>
             </div>
 
-            <button
-              onClick={handleLogout}
-              className="px-4 py-2 bg-red-950/40 hover:bg-red-900/60 border border-red-500/30 rounded-lg text-red-200 text-sm font-medium transition-all duration-200 flex items-center gap-2 hover:shadow-lg hover:shadow-red-900/20"
-            >
-              <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
-              </svg>
-              <span>Logout</span>
-            </button>
+            <div className="flex gap-4">
+              <Link 
+                href="/login"
+                className="px-4 py-2 text-red-200 hover:text-red-100 transition-colors duration-200 font-medium text-sm"
+              >
+                Login
+              </Link>
+              <Link 
+                href="/register"
+                className="px-4 py-2 bg-red-600/20 hover:bg-red-600/30 text-red-100 rounded-lg border border-red-500/30 transition-all duration-200 font-medium text-sm"
+              >
+                Sign Up
+              </Link>
+            </div>
           </div>
         </div>
       </header>
@@ -133,8 +98,9 @@ useEffect(() => {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z" />
                 </svg>
               </div>
-              <h2 className="text-xl font-semibold text-red-100 mb-2">Welcome to SyncHer!</h2>
-              <p className="text-red-200/60">Ask me anything about menstrual health, wellness, or periods.</p>
+              <h2 className="text-xl font-semibold text-red-100 mb-2">Welcome to SyncHer Guest Chat!</h2>
+              <p className="text-red-200/60 mb-2">Ask me anything about menstrual health, wellness, or periods.</p>
+              <p className="text-red-400/60 text-xs">Login or Register to save your chat history and unlock all features.</p>
             </div>
           )}
           

@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from app.routers.chatbot import router
+from app.routers import chatbot, register, login
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -21,7 +21,9 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.include_router(router)
+app.include_router(chatbot.router)
+app.include_router(register.router)
+app.include_router(login.router)
 
 # @app.post("")
 # async def register():

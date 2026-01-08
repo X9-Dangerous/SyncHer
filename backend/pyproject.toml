@@ -12,13 +12,19 @@ packages = [
 python = "^3.12"
 fastapi = "^0.124.2"
 uvicorn = {extras = ["standard"], version = "^0.38.0"}
-pydantic = "^2.12.5"
+pydantic = {extras = ["email"], version = "^2.12.5"}
 python-dotenv = "^1.2.1"
 google-cloud-dialogflow = "^2.44.0"
 sqlalchemy = "^2.0.45"
 psycopg2-binary = "^2.9.11"
 dotenv = "^0.9.9"
 google-cloud-dialogflow-cx = "^2.1.0"
+psycopg = "^3.3.2"
+sqlmodel = "^0.0.31"
+bcrypt = "^5.0.0"
+pyjwt = "^2.10.1"
+python-multipart = "^0.0.21"
+python-jose = {extras = ["cryptography"], version = "^3.5.0"}
 
 
 [build-system]
