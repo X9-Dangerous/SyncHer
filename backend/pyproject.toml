@@ -1,16 +1,26 @@
-[project]
+[tool.poetry]
 name = "backend"
 version = "0.1.0"
-description = "Add your description here"
+description = ""
+authors = ["justuskitavi <justusalex35@gmail.com>"]
 readme = "README.md"
-requires-python = ">=3.11"
-dependencies = [
-    "dotenv>=0.9.9",
-    "fastapi>=0.128.0",
-    "google>=3.0.0",
-    "google-cloud-dialogflow-cx>=2.1.0",
-    "psycopg2>=2.9.11",
-    "sqlalchemy>=2.0.45",
-    "sqlmodel>=0.0.31",
-    "uvicorn>=0.40.0",
+packages = [
+    { include = "app" }
 ]
+
+[tool.poetry.dependencies]
+python = "^3.12"
+fastapi = "^0.124.2"
+uvicorn = {extras = ["standard"], version = "^0.38.0"}
+pydantic = "^2.12.5"
+python-dotenv = "^1.2.1"
+google-cloud-dialogflow = "^2.44.0"
+sqlalchemy = "^2.0.45"
+psycopg2-binary = "^2.9.11"
+dotenv = "^0.9.9"
+google-cloud-dialogflow-cx = "^2.1.0"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

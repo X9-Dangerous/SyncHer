@@ -10,6 +10,7 @@ export default function Chat() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [loading, setLoading] = useState(false);
+  const [sessionId] = useState(() => typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(7));
 
   const sendMessage = async () => {
     if (!input.trim()) return;
@@ -28,7 +29,9 @@ export default function Chat() {
       const res = await fetch("/api/chatbot/ask", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ question: userMessage.text
+        body: JSON.stringify({ 
+          question: userMessage.text,
+          session_id: sessionId
          }),
       });
       
@@ -36,7 +39,7 @@ export default function Chat() {
 
       const botMessage: Message = { 
         sender : "bot",
-        text: data.response,
+        text: data.answer,
       };
 
       setMessages((prev) => [...prev, botMessage]);

@@ -1,7 +1,15 @@
+credentials/
 .env
+site-packages/
+.project
+.pydevproject
+.settings/
+__pycache__/
+*.pyc
+.idea/
+.vscode/
 
-service_account.json
+test.py
 
 .venv
-
-*__pycache__
+poetry.lock
