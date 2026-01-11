@@ -1,6 +1,6 @@
 "use client"; 
 
-import { useState, useEffect, useRef } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 
 
@@ -17,24 +17,6 @@ export default function Chat() {
   const [loading, setLoading] = useState(false);
   const [sessionId] = useState(() => typeof crypto !== 'undefined' && crypto.randomUUID ? crypto.randomUUID() : Math.random().toString(36).substring(7));
 
-  const [authChecked, setAuthChecked] = useState(false);
-
-useEffect(() => {
-  const token = localStorage.getItem("token");
-  if (!token) {
-    router.replace("/login");
-  } else {
-    setAuthChecked(true);
-  }
-}, [router]);
-
-  if (!authChecked) {
-    return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
-        <div className="w-8 h-8 border-4 border-red-500/30 border-t-red-500 rounded-full animate-spin"></div>
-      </div>
-    );
-  }
 
 
   const sendMessage = async () => {
@@ -98,6 +80,15 @@ useEffect(() => {
         <div className="max-w-4xl mx-auto px-6 py-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
+              <button 
+                onClick={() => router.push("/dashboard")}
+                className="p-2 hover:bg-red-500/10 rounded-full transition-colors group"
+                title="Back to Dashboard"
+              >
+                <svg className="w-6 h-6 text-red-300 group-hover:-translate-x-1 transition-transform" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                </svg>
+              </button>
               <div className="w-12 h-12 bg-red-500/20 backdrop-blur-sm rounded-full flex items-center justify-center border border-red-500/30">
                 <svg className="w-7 h-7 text-red-300" fill="currentColor" viewBox="0 0 20 20">
                   <path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z" />
@@ -105,7 +96,7 @@ useEffect(() => {
               </div>
               <div>
                 <h1 className="text-2xl font-bold text-red-100">SyncHer</h1>
-                <p className="text-red-200/70 text-sm">Your menstrual wellness companion</p>
+                <p className="text-red-200/70 text-sm">Your private companion</p>
               </div>
             </div>
 
@@ -164,7 +155,6 @@ useEffect(() => {
                     <span className="w-2 h-2 bg-red-400 rounded-full animate-bounce" style={{ animationDelay: "150ms" }}></span>
                     <span className="w-2 h-2 bg-red-400 rounded-full animate-bounce" style={{ animationDelay: "300ms" }}></span>
                   </div>
-                  <span className="text-sm text-red-200">SyncHer is typing...</span>
                 </div>
               </div>
             </div>

@@ -46,11 +46,17 @@ export default function Login(){
             const data = await res.json();
 
             if (!res.ok){
-                setMessage(data.detail || "Login failed.");
+                let errorMsg = "Login failed.";
+                if (typeof data.detail === "string") {
+                    errorMsg = data.detail;
+                } else if (Array.isArray(data.detail)) {
+                    errorMsg = data.detail[0]?.msg || "Invalid input data";
+                }
+                setMessage(errorMsg);
             } else{
                 localStorage.setItem("token", data.access_token);
                 setMessage("Login successful!");
-                router.push("/chat")
+                router.push("/dashboard")
             }
 
         } catch {
@@ -139,7 +145,7 @@ export default function Login(){
 
                 <div className="mt-8 text-center">
                   <p className="text-red-200/40 text-xs">
-                    Don't have an account? <Link href="/register" className="text-red-400 hover:text-red-300 font-medium transition-colors">Sign Up</Link>
+                    Don&apos;t have an account? <Link href="/register" className="text-red-400 hover:text-red-300 font-medium transition-colors">Sign Up</Link>
                   </p>
                 </div>
               </div>

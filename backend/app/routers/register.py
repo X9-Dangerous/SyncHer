@@ -15,8 +15,6 @@ def register(user: UserCreate):
         if existing_user:
             raise HTTPException(status_code=400, detail="Email already registered")
         
-        print(type(user.password), user.password)
-
         
         hashed_pw = hash_password(user.password)
         

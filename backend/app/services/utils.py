@@ -47,7 +47,7 @@ def decode_access_token(token: str):
 
 #jwt token verification utility
 security = HTTPBearer()
-SECRET_KEY = os.getenv("JWT_SECRET")
+SECRET_KEY = JWT_SECRET
 ALGORITHM = "HS256"
 
 def get_current_user(

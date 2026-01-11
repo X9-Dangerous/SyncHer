@@ -71,6 +71,12 @@ export default function GuestChat() {
 
             <div className="flex gap-4">
               <Link 
+                href="/"
+                className="px-4 py-2 text-red-200/60 hover:text-red-100 transition-colors duration-200 font-medium text-sm"
+              >
+                Home
+              </Link>
+              <Link 
                 href="/login"
                 className="px-4 py-2 text-red-200 hover:text-red-100 transition-colors duration-200 font-medium text-sm"
               >
@@ -87,6 +93,13 @@ export default function GuestChat() {
         </div>
       </header>
 
+      {/* Persistence Disclaimer */}
+      <div className="bg-red-500/10 border-b border-red-500/20 py-2 text-center animate-fade-in">
+        <p className="text-[10px] text-red-300/60 font-medium uppercase tracking-widest">
+           ⚠️ Guest Mode: Messages are not saved and will disappear on reload.
+        </p>
+      </div>
+
       {/* Chat Container */}
       <div className="flex-1 max-w-4xl w-full mx-auto px-4 py-6 flex flex-col">
         {/* Messages Area */}
@@ -100,7 +113,6 @@ export default function GuestChat() {
               </div>
               <h2 className="text-xl font-semibold text-red-100 mb-2">Welcome to SyncHer Guest Chat!</h2>
               <p className="text-red-200/60 mb-2">Ask me anything about menstrual health, wellness, or periods.</p>
-              <p className="text-red-400/60 text-xs">Login or Register to save your chat history and unlock all features.</p>
             </div>
           )}
           
@@ -130,7 +142,6 @@ export default function GuestChat() {
                     <span className="w-2 h-2 bg-red-400 rounded-full animate-bounce" style={{ animationDelay: "150ms" }}></span>
                     <span className="w-2 h-2 bg-red-400 rounded-full animate-bounce" style={{ animationDelay: "300ms" }}></span>
                   </div>
-                  <span className="text-sm text-red-200">SyncHer is typing...</span>
                 </div>
               </div>
             </div>

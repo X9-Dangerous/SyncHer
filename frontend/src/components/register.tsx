@@ -50,7 +50,14 @@ export default function Register(){
             const data = await res.json();
 
             if (!res.ok){
-                setMessage(data.detail || "Registration failed.");
+                let errorMsg = "Registration failed.";
+                if (typeof data.detail === "string") {
+                    errorMsg = data.detail;
+                } else if (Array.isArray(data.detail)) {
+                    // Handle Pydantic validation errors
+                    errorMsg = data.detail[0]?.msg || "Invalid input data";
+                }
+                setMessage(errorMsg);
             } else{
                 setMessage("Account created successfully!");
                 router.push("/login")
